@@ -1,11 +1,17 @@
 import pydealer
+from collections import deque
 from Hand import Hand
 
 class Blackjack_player:
-    def __init__(self, bankroll):
+    def __init__(self, bankroll, dealer_behavior = 'H17'):
         # store game state
+        match dealer_behavior:
+            case 'S17':
+                self.dealer_behavior = 'S17'
+            case _:
+                self.dealer_behavior = 'H17'
         self.bankroll = bankroll
-        self.player = None
+        self.player = deque() # deque of hands
         self.dealer = None
         # ^ may replace with self.players = []
         # list of players for multiple hands
@@ -27,6 +33,7 @@ class Blackjack_player:
         self.hit(self.player)
         self.hit(self.dealer)
         self.hit(self.player)
+        
         # action on player
         while self.player.sum < 21:
             action = get_player_action()
@@ -40,7 +47,7 @@ class Blackjack_player:
                 case 'split':
                     self.split(self.player)
         self.resolve_dealer()
-        # if blackjack and not dealer blackjack
+        # if blackjack
         if self.player.sum == 21 and self.player.size == 2:
             if (self.dealer.sum == 21 and self.dealer.size == 2):
                 self.bankroll += bet_amount
@@ -64,10 +71,15 @@ class Blackjack_player:
     def get_player_action(self):
         # ask player for their choice of action
         pass #TODO
+    
     def resolve_dealer(self):
         # automatically play for dealer
         # H17 rules OR S17 Rules
-        pass #TODO
+        while self.dealer.sum < 17:
+            self.hit(self.dealer)
+            if self.dealer_behavior == 'H17' and self.dealer.soft and self.dealer.sum == 17:
+                self.hit(self.dealer)
+        return
         
     def hit(self, hand):
         hand.add(self.shoe.deal(1)[0])
