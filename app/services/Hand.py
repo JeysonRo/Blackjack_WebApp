@@ -1,6 +1,5 @@
 import pydealer
 
-
 class Hand:
     card_values = {"Ace" : 1,
                     "2" : 2,
@@ -16,11 +15,12 @@ class Hand:
                     "Queen" : 10,
                     "King" : 10}
     
-    def __init__(self):
+    def __init__(self, bet:int = 100):
         self.card_list = []
         self.size = 0
         self.sum = 0
         self.soft = False
+        self.bet = bet
 
     def add(self, card):
         self.card_list.append(card)
