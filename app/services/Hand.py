@@ -36,3 +36,6 @@ class Hand:
             self.sum += 10
             self.soft = True
                      
+    def split(self):
+        # TODO split 2 cards into 2 hands
+        pass

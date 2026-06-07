@@ -148,7 +148,7 @@ class Blackjack_player:
         # deal 1 card to each player
         # add second player to deque
         # continue play of first player
-        pass #TODO
+        pass #TODO # requires functionality in Hand class
     
     def display_bankroll(self):
         print('Current bankroll: ', self.bankroll)
