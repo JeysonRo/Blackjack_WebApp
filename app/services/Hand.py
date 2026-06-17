@@ -17,16 +17,15 @@ class Hand:
     
     def __init__(self, bet:int = 100):
         self.card_list = []
-        self.size = 0
         self.sum = 0
         self.soft = False
         self.bet = bet
+        # consider keeping Ace_count: for purposes of keeping track of soft hand status when removing aces from hand
 
     def add(self, card):
         self.card_list.append(card)
-        self.size += 1
         self.sum += Hand.card_values[card.value]
-        # handle bust and Ace
+        # handle soft hand
         if self.sum > 21:
             if self.soft:
                 self.soft = False
@@ -35,7 +34,19 @@ class Hand:
         elif card.value == "Ace" and self.sum <= 11:
             self.sum += 10
             self.soft = True
+    
+    def pop_card(self): # Currently for split_hand use only
+        extra_card = self.card_list.pop()
+        self.sum -= Hand.card_values[extra_card.value]
+        
+        return extra_card
                      
-    def split(self):
-        # TODO split 2 cards into 2 hands
-        pass
+    def split_hand(self):
+        #split 1 hand with 2 cards into 2 hands with 1 card
+        if len(self.card_list) != 2:
+            print('can not split hand that is not size == 2')
+            return None
+        new_hand = Hand(self.bet)
+        extra = self.pop_card()
+        new_hand.add(extra)
+        return new_hand
