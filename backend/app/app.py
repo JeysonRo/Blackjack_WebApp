@@ -7,7 +7,13 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     # return render_template('index.html')
-    return "<p>whats up 4head<p>"
+    return "whats up 4head"
+
+@app.route("/api/game", methods = ["GET"])
+def get_game():
+    return {
+        "message": "This came from Flask"
+    }
 
 # @app.route("/hello")
 # def hello():
