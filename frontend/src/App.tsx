@@ -1,14 +1,15 @@
-import { useState } from "react";
+// import { useState } from "react";
+import { useQuery } from "@tanstack/react-query"
+import { getGame } from "./api/game";
 
 function App() {
-  const [message, setMessage] = useState("");
 
-  async function startGame() {
-    const response = await fetch("/api/game");
-    const data = await response.json();
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ["game"],
+    queryFn: getGame,
+    enabled: false,
+  });
 
-    setMessage(data.message);
-  }
   return (
     <div className="App">
       <header>
@@ -30,10 +31,14 @@ function App() {
           <button>Split</button>
         </div>
         <div className="Menu">
-          <button onClick={startGame}>
+          <button onClick={() => refetch()}>
             Start
           </button>
-          <p>{message}</p>
+          <div>
+            {isLoading && <p>WE are Loading...</p>}
+            {error && <p>MFW Something went wrong.</p>}
+            {data && <p>{data.message}</p>}
+          </div>
         </div>
       </main>
     </div>
