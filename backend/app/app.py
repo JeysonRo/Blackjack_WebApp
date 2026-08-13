@@ -14,6 +14,12 @@ def get_game():
     return {
         "message": "This came from Flask"
     }
+    
+@app.route("/api/game", methods=["POST"])
+def start_game():
+    return {
+        "message": "Game started!"
+    }
 
 # @app.route("/hello")
 # def hello():

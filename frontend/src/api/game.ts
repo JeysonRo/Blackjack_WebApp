@@ -7,3 +7,15 @@ export async function getGame() {
 
     return response.json();
 }
+
+export async function startGame() {
+    const response = await fetch("/api/game", {
+        method: "POST",
+    });
+
+    if (!response.ok) {
+        throw new Error('HTTP error: ${response.status}');
+    }
+
+    return response.json();
+}
