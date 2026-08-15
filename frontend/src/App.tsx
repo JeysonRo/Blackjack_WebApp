@@ -1,13 +1,17 @@
 // import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query"
-import { getGame } from "./api/game";
+import { getGame, startGame } from "./api/game";
 
 function App() {
 
-  const { data, isLoading, error, refetch } = useQuery({
+  const gameQuery = useQuery({
     queryKey: ["game"],
     queryFn: getGame,
     enabled: false,
+  });
+
+  const startGameMutation = useMutation({
+    mutationFn: startGame,
   });
 
   return (
@@ -31,14 +35,30 @@ function App() {
           <button>Split</button>
         </div>
         <div className="Menu">
-          <button onClick={() => refetch()}>
-            Start
+          <button onClick={() => gameQuery.refetch()}>
+            GetInfo
           </button>
           <div>
-            {isLoading && <p>WE are Loading...</p>}
-            {error && <p>MFW Something went wrong.</p>}
-            {data && <p>{data.message}</p>}
+            {gameQuery.isLoading && <p>WE are Loading...</p>}
+            {gameQuery.error && <p>MFW Something went wrong.</p>}
+            {gameQuery.data && <p>{gameQuery.data.message}</p>}
           </div>
+          </div>
+        <div className="Menu">
+          <button
+           onClick={() => startGameMutation.mutate()}
+           disabled={startGameMutation.isPending}
+           >
+            {startGameMutation.isPending ? "Starting..." : "Start Game"}
+          </button>
+
+          {startGameMutation.isError && (
+            <p>Error: {startGameMutation.error.message}</p>
+          )}
+
+          {startGameMutation.data && (
+            <p>{startGameMutation.data.message}</p>
+          )}
         </div>
       </main>
     </div>
