@@ -1,7 +1,8 @@
 from flask import Flask, request
 from markupsafe import escape
 from flask import url_for
-from services import Blackjack_player
+from app.services.Blackjack_player import Blackjack_game
+from app.services.Hand import Hand
 
 app = Flask(__name__)
 
@@ -16,13 +17,12 @@ def get_game():
     
 @app.route("/api/game", methods=["POST"])
 def start_game():
-    game = Blackjack_player.Blackjack_game(1000)
+    game = Blackjack_game(1000)
     game.play([100])
     game_info = {
-        # TODO fix service to correctly grab valid_actions, after fixing blackjack service input()
-        "dealer_hand": game.dealer.card_list[1],
-        "player_hand": game.players,
-        "valid_actions": ["hit", "stand"],
+        "dealer_hand": game.dealer.card_list[1].value,
+        "player_hand": game.players[0].get_hand_values(),
+        "valid_actions": game.players[0].get_valid_actions(),
     }
     return game_info
 

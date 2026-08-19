@@ -1,7 +1,7 @@
 import pydealer
 from collections import deque
-from Hand import Hand
-
+from .Hand import Hand
+        
 class Blackjack_game:
     def __init__(self, bankroll, dealer_behavior = 'H17'):
         # store game state
@@ -34,13 +34,18 @@ class Blackjack_game:
         for player in self.players:    
             self.hit(player)
         
+        
         # action on player
         print("Dealer:", self.dealer.card_list[1])
-        while self.players:
-            player = self.players.popleft()
-            self.resolve_player(player)
-        self.resolve_dealer()
-        self.resolve_bets()
+        
+        # won't be used for web version
+        
+        # while self.players:
+        #     player = self.players.popleft()
+        #     self.resolve_player(player)
+        
+        # self.resolve_dealer()
+        # self.resolve_bets()
         
     def resolve_bets(self):
         player: Hand
