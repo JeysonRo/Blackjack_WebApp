@@ -1,8 +1,8 @@
 from flask import Flask, request
 from markupsafe import escape
 from flask import url_for
-from app.services.Blackjack_player import Blackjack_game
-from app.services.Hand import Hand
+from services.Blackjack_player import Blackjack_game
+from services.Hand import Hand
 
 app = Flask(__name__)
 

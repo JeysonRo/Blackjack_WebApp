@@ -1,6 +1,7 @@
 // import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query"
 import { getGame, startGame } from "./api/game";
+import "./App.css"
 
 function App() {
 
@@ -56,8 +57,15 @@ function App() {
             <p>Error: {startGameMutation.error.message}</p>
           )}
 
-          {startGameMutation.data && (
-            <p>{startGameMutation.data.message}</p>
+          {startGameMutation.data && ( // hand off card array to PlayerWindow component
+            <div>
+              {startGameMutation.data.player_hand.map((card, index) => (
+                <span key={index}>
+                  {index > 0 && " | "}
+                  {card}
+                </span>
+              ))}
+            </div>
           )}
         </div>
       </main>
