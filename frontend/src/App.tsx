@@ -57,9 +57,9 @@ function App() {
             <p>Error: {startGameMutation.error.message}</p>
           )}
 
-          {startGameMutation.data && ( // hand off card array to PlayerWindow component
+          {startGameMutation.data && (
             <div>
-              {startGameMutation.data.player_hand.map((card, index) => (
+              {startGameMutation.data.player_hand.map((card: string, index: number) => (
                 <span key={index}>
                   {index > 0 && " | "}
                   {card}
