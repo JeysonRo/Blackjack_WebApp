@@ -2,6 +2,8 @@
 import { useQuery, useMutation } from "@tanstack/react-query"
 import { getGame, startGame } from "./api/game";
 import "./App.css"
+import Actions from "./components/Actions"
+import Menu from "./components/Menu";
 
 function App() {
 
@@ -28,46 +30,23 @@ function App() {
             {/* Dealer cards */}
           </div>
         </section>
+        
+        <Actions /> {/* Component for displaying available actions */}
+        
 
-        <div className="actions">
-          <button>Hit</button>
-          <button>Stand</button>
-          <button>Double Down</button>
-          <button>Split</button>
-        </div>
-        <div className="Menu">
+        <div className="GetInfo">
           <button onClick={() => gameQuery.refetch()}>
             GetInfo
           </button>
-          <div>
-            {gameQuery.isLoading && <p>WE are Loading...</p>}
-            {gameQuery.error && <p>MFW Something went wrong.</p>}
-            {gameQuery.data && <p>{gameQuery.data.message}</p>}
-          </div>
-          </div>
-        <div className="Menu">
-          <button
-           onClick={() => startGameMutation.mutate()}
-           disabled={startGameMutation.isPending}
-           >
-            {startGameMutation.isPending ? "Starting..." : "Start Game"}
-          </button>
-
-          {startGameMutation.isError && (
-            <p>Error: {startGameMutation.error.message}</p>
-          )}
-
-          {startGameMutation.data && (
             <div>
-              {startGameMutation.data.player_hand.map((card: string, index: number) => (
-                <span key={index}>
-                  {index > 0 && " | "}
-                  {card}
-                </span>
-              ))}
+              {gameQuery.isLoading && <p>WE are Loading...</p>}
+              {gameQuery.error && <p>MFW Something went wrong.</p>}
+              {gameQuery.data && <p>{gameQuery.data.message}</p>}
             </div>
-          )}
-        </div>
+          </div>
+
+        <Menu startGameMutation={startGameMutation} /> {/* Component for displaying Menu */}
+
       </main>
     </div>
   );
