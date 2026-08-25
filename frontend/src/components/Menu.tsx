@@ -1,11 +1,11 @@
 import type { UseMutationResult } from "@tanstack/react-query"
 import type { GameState } from "../types/game";
 
-type MenuProps = {
+type Props = {
   startGameMutation: UseMutationResult<GameState, Error, void, unknown>;
 };
 
-export default function Menu({ startGameMutation }: MenuProps ){
+export default function Menu({ startGameMutation }: Props ){
     return (
         <div className="Menu">
           <button

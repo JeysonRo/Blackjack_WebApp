@@ -31,7 +31,7 @@ function App() {
           </div>
         </section>
         
-        <Actions /> {/* Component for displaying available actions */}
+        <Actions startGameMutation={startGameMutation} /> {/* Component for displaying available actions */}
         
 
         <div className="GetInfo">

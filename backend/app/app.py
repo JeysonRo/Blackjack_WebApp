@@ -1,6 +1,5 @@
-from flask import Flask, request
+from flask import Flask, request, url_for
 from markupsafe import escape
-from flask import url_for
 from services.Blackjack_player import Blackjack_game
 from services.Hand import Hand
 
