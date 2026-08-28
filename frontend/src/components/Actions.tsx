@@ -2,16 +2,17 @@ import type { UseMutationResult } from "@tanstack/react-query"
 import type { GameState } from "../types/game";
 
 type Props = {
-  startGameMutation: UseMutationResult<GameState, Error, void, unknown>;
+  gameState: GameState | undefined;
+  actionMutation: UseMutationResult<GameState, Error, void, unknown>;
 };
 
-export default function Actions({startGameMutation}: Props) {
+export default function Actions({gameState, actionMutation}: Props) {
     return (
         <div className="actions">
-          {startGameMutation.data?.valid_actions.includes("hit") && (<button>Hit</button>)}
-          {startGameMutation.data?.valid_actions.includes("stand") && (<button>Stand</button>)}
-          {startGameMutation.data?.valid_actions.includes("double") && (<button>Double</button>)}
-          {startGameMutation.data?.valid_actions.includes("split") && (<button>Split</button>)}
+          {gameState?.valid_actions?.includes("hit") && (<button>Hit</button>)}
+          {gameState?.valid_actions?.includes("stand") && (<button>Stand</button>)}
+          {gameState?.valid_actions?.includes("double") && (<button>Double</button>)}
+          {gameState?.valid_actions?.includes("split") && (<button>Split</button>)}
         </div>
     );
 }

@@ -4,6 +4,7 @@ from services.Blackjack_player import Blackjack_game
 from services.Hand import Hand
 
 app = Flask(__name__)
+game = None
 
 @app.route("/")
 def home():
@@ -12,10 +13,19 @@ def home():
 
 @app.route("/api/game", methods = ["GET"])
 def get_game():
-    return {"message": "This came from Flask"}
+    if game is None:
+        return {"message": "No game in progess"}, 404
+    
+    game_info = {
+            "dealer_hand": game.dealer.card_list[1].value,
+            "player_hand": game.players[0].get_hand_values(),
+            "valid_actions": game.players[0].get_valid_actions(),
+        }
+    return game_info
     
 @app.route("/api/game", methods=["POST"])
 def start_game():
+    global game
     game = Blackjack_game(1000)
     game.play([100])
     game_info = {
@@ -25,19 +35,18 @@ def start_game():
     }
     return game_info
 
-@app.route("/api/game", methods=["POST"])
+@app.route("/api/game/hit", methods=["POST"])
 def Hit():
-    return {"message": "Card Hit!"}
-
-# @app.route("/hello")
-# def hello():
-#     name = request.args.get("name", "Flask")
-#     return f"Hello, {escape(name)}!"
-
-# with app.test_request_context():
-#     print(url_for('home'))
-#     print(url_for('hello'))
-#     print(url_for('profile', username='John Doe'))
+    global game
+    if game is None:
+            return {"message": "No game in progess"}, 404
+    game.hit(game.players[0])
+    game_info = {
+            "dealer_hand": game.dealer.card_list[1].value,
+            "player_hand": game.players[0].get_hand_values(),
+            "valid_actions": game.players[0].get_valid_actions(),
+        }
+    return game_info
 
 if __name__ == "__main__":
     app.run(debug=True)

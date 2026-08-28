@@ -1,20 +1,31 @@
-// import { useState } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query"
-import { getGame, startGame } from "./api/game";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { chooseAction, getGameState, startGame } from "./api/game";
+import type { GameState } from "./types/game";
 import "./App.css"
 import Actions from "./components/Actions"
 import Menu from "./components/Menu";
 
 function App() {
+  const queryClient = useQueryClient();
 
-  const gameQuery = useQuery({
+  const gameStateQuery = useQuery({
     queryKey: ["game"],
-    queryFn: getGame,
-    enabled: false,
+    queryFn: getGameState,
   });
+
 
   const startGameMutation = useMutation({
     mutationFn: startGame,
+    onSuccess: (data) => {
+      queryClient.setQueryData(["game"], data);
+    },
+  });
+
+  const actionMutation = useMutation({
+    mutationFn: chooseAction,
+    onSuccess: (data) => {
+      queryClient.setQueryData(["game"], data);
+    },
   });
 
   return (
@@ -27,26 +38,35 @@ function App() {
         <section className="dealer">
           <h2>Dealer</h2>
           <div className="hand">
-            {/* Dealer cards */}
+            {(gameStateQuery.isSuccess) && (<p>{gameStateQuery.data.dealer_hand}</p>)}
           </div>
         </section>
-        
-        <Actions startGameMutation={startGameMutation} /> {/* Component for displaying available actions */}
+
+        {gameStateQuery.data && (
+          <Actions gameState={gameStateQuery.data} actionMutation={actionMutation} /> /* component to show actions */
+        )}
         
 
-        <div className="GetInfo">
-          <button onClick={() => gameQuery.refetch()}>
+        {/* <div className="GetInfo">
+          <button onClick={() => gameState.refetch()}>
             GetInfo
           </button>
-            <div>
-              {gameQuery.isLoading && <p>WE are Loading...</p>}
-              {gameQuery.error && <p>MFW Something went wrong.</p>}
-              {gameQuery.data && <p>{gameQuery.data.message}</p>}
-            </div>
+          <div>
+            {gameState.isLoading && <p>WE are Loading...</p>}
+            {gameState.error && <p>MFW Something went wrong.</p>}
+            {gameState.data && <p>{gameState.data.message}</p>}
           </div>
+        </div> */}
 
         <Menu startGameMutation={startGameMutation} /> {/* Component for displaying Menu */}
 
+        <div className="debug">
+          {(gameStateQuery.isSuccess) && (
+            <pre>
+              {JSON.stringify(gameStateQuery.data, null, 2)}
+            </pre>
+          )}
+        </div>
       </main>
     </div>
   );
