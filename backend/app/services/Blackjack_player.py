@@ -86,10 +86,9 @@ class Blackjack_game:
                 self.display_bankroll()
         return
         
-    def get_player_action(self, player: Hand):
+    def get_player_action(self, player: Hand, action = None):
         # ask player for their choice of action
         # temporarily text input #TODO
-        action = None
         while not action:
             if len(player.card_list) == 2: # can double
                 if player.card_list[0] == player.card_list[1]: # player can split
@@ -99,7 +98,7 @@ class Blackjack_game:
             else:
                 print("Options: Hit | Stand")
             
-            action = input()
+            if not action: action = input()
             match action:
                 case 'hit':
                     return action

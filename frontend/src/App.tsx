@@ -4,6 +4,7 @@ import type { GameState } from "./types/game";
 import "./App.css"
 import Actions from "./components/Actions"
 import Menu from "./components/Menu";
+import Players from "./components/Players";
 
 function App() {
   const queryClient = useQueryClient();
@@ -46,17 +47,7 @@ function App() {
           <Actions gameState={gameStateQuery.data} actionMutation={actionMutation} /> /* component to show actions */
         )}
         
-
-        {/* <div className="GetInfo">
-          <button onClick={() => gameState.refetch()}>
-            GetInfo
-          </button>
-          <div>
-            {gameState.isLoading && <p>WE are Loading...</p>}
-            {gameState.error && <p>MFW Something went wrong.</p>}
-            {gameState.data && <p>{gameState.data.message}</p>}
-          </div>
-        </div> */}
+        <Players gameState={gameStateQuery.data}/>
 
         <Menu startGameMutation={startGameMutation} /> {/* Component for displaying Menu */}
 

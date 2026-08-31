@@ -18,17 +18,6 @@ export default function Menu({ startGameMutation }: Props ){
           {startGameMutation.isError && (
             <p>Error: {startGameMutation.error.message}</p>
           )}
-
-          {startGameMutation.data && (
-            <div>
-              {startGameMutation.data.player_hand.map((card: string, index: number) => (
-                <span key={index}>
-                  {index > 0 && " | "}
-                  {card}
-                </span>
-              ))}
-            </div>
-          )}
         </div>
     )
 }

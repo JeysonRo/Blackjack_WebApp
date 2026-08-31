@@ -24,9 +24,13 @@ export async function startGame(): Promise<GameState> {
     return response.json();
 }
 
-export async function chooseAction(): Promise<GameState> {
-    const response = await fetch("/api/game", {
+export async function chooseAction(action: string): Promise<GameState> {
+    const response = await fetch("/api/game/action", {
         method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ action }),
     });
 
     if (!response.ok) {

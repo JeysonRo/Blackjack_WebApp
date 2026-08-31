@@ -35,12 +35,23 @@ def start_game():
     }
     return game_info
 
-@app.route("/api/game/hit", methods=["POST"])
-def Hit():
+@app.route("/api/game/action", methods=["POST"])
+def Action():
     global game
     if game is None:
             return {"message": "No game in progess"}, 404
-    game.hit(game.players[0])
+        
+    data = request.get_json()
+    action = data["action"]
+    
+    if action == "hit":   
+        game.hit(game.players[0])
+    if action == "stand":
+        game.stand(game.players[0])
+    if action == "double":
+        game.double(game.players[0])
+    if action == "split":
+        game.split(game.players[0])
     game_info = {
             "dealer_hand": game.dealer.card_list[1].value,
             "player_hand": game.players[0].get_hand_values(),
