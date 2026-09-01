@@ -18,7 +18,12 @@ def get_game():
     
     game_info = {
             "dealer_hand": game.dealer.card_list[1].value,
-            "player_hand": game.players[0].get_hand_values(),
+            "player_hands": [
+                card_list.get_hand_values() for card_list in game.players
+            ],
+            "finished_hands": [
+                card_list.get_hand_values() for card_list in game.final_hands
+            ],
             "valid_actions": game.players[0].get_valid_actions(),
         }
     return game_info
@@ -29,10 +34,15 @@ def start_game():
     game = Blackjack_game(1000)
     game.play([100])
     game_info = {
-        "dealer_hand": game.dealer.card_list[1].value,
-        "player_hand": game.players[0].get_hand_values(),
-        "valid_actions": game.players[0].get_valid_actions(),
-    }
+            "dealer_hand": game.dealer.card_list[1].value,
+            "player_hands": [
+                card_list.get_hand_values() for card_list in game.players
+            ],
+            "finished_hands": [
+                card_list.get_hand_values() for card_list in game.final_hands
+            ],
+            "valid_actions": game.players[0].get_valid_actions(),
+        }
     return game_info
 
 @app.route("/api/game/action", methods=["POST"])
@@ -54,7 +64,12 @@ def Action():
         game.split(game.players[0])
     game_info = {
             "dealer_hand": game.dealer.card_list[1].value,
-            "player_hand": game.players[0].get_hand_values(),
+            "player_hands": [
+                card_list.get_hand_values() for card_list in game.players
+            ],
+            "finished_hands": [
+                card_list.get_hand_values() for card_list in game.final_hands
+            ],
             "valid_actions": game.players[0].get_valid_actions(),
         }
     return game_info

@@ -66,7 +66,7 @@ class Hand:
         return valid_actions
     
     def get_hand_values(self):
-        hand_values = []
+        hands = []
         for card in self.card_list:
-            hand_values.append(self.card_values[card.value])
-        return hand_values
+            hands.append(card.value)
+        return hands

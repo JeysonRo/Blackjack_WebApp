@@ -12,7 +12,7 @@ class Blackjack_game:
                 self.dealer_behavior = 'H17'
         self.bankroll = bankroll
         self.players:deque[Hand] = deque() # deque of hands
-        self.final_hands = []
+        self.final_hands:list[Hand] = []
         self.dealer = Hand()
         self.initialize_shoe()
         

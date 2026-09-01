@@ -1,6 +1,7 @@
 export type GameState = {
     "dealer_hand": string[];
-    "player_hand": string[];
+    "player_hands": string[][];
+    "finished_hands": string[][];
     "valid_actions": string[];
 }
 
