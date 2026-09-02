@@ -5,6 +5,7 @@ import "./App.css"
 import Actions from "./components/Actions"
 import Menu from "./components/Menu";
 import Players from "./components/Players";
+import Hand from "./components/Hand";
 
 function App() {
   const queryClient = useQueryClient();
@@ -38,9 +39,9 @@ function App() {
       <main>
         <section className="dealer">
           <h2>Dealer</h2>
-          <div className="hand">
-            {(gameStateQuery.isSuccess) && (<p>{gameStateQuery.data.dealer_hand}</p>)}
-          </div>
+          {gameStateQuery.data && (
+            <Hand cards={gameStateQuery.data.dealer_hand}/>
+          )}
         </section>
 
         {gameStateQuery.data && (

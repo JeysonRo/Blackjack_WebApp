@@ -9,6 +9,22 @@
   gap: 1rem
 }
 
+.handgroup {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.hand {
+  padding: 15px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+.selected {
+  border: 2px solid gold;
+}
+
 /* .Menu {
   display: flex;
   flex-direction: column;

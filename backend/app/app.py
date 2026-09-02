@@ -17,7 +17,7 @@ def get_game():
         return {"message": "No game in progess"}, 404
     
     game_info = {
-            "dealer_hand": game.dealer.card_list[1].value,
+            "dealer_hand": ["Hidden", game.dealer.card_list[1].value],
             "player_hands": [
                 card_list.get_hand_values() for card_list in game.players
             ],
@@ -34,7 +34,7 @@ def start_game():
     game = Blackjack_game(1000)
     game.play([100, 100])
     game_info = {
-            "dealer_hand": game.dealer.card_list[1].value,
+            "dealer_hand": ["Hidden", game.dealer.card_list[1].value],
             "player_hands": [
                 card_list.get_hand_values() for card_list in game.players
             ],
@@ -63,7 +63,7 @@ def Action():
     if action == "split":
         game.split(game.players[0])
     game_info = {
-            "dealer_hand": game.dealer.card_list[1].value,
+            "dealer_hand": ["Hidden", game.dealer.card_list[1].value],
             "player_hands": [
                 card_list.get_hand_values() for card_list in game.players
             ],
