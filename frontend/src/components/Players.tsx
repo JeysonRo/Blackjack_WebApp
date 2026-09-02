@@ -1,4 +1,5 @@
 import type { GameState } from "../types/game";
+import Hand from "./Hand";
 
 type Props = {
     gameState: GameState | undefined;
@@ -11,13 +12,23 @@ export default function Players({ gameState }: Props) {
             <h2>Player</h2>
             {gameState && (
                 <div>
-                    {/* <Hand cards=/> */}
-                    <div className="hand">
-                        {gameState.player_hands[0].map((card: string, index: number) => (
-                            <span key={index}>
-                                {index > 0 && " | "}
-                                {card}
-                            </span>
+                    <div className="unfinishedHands">
+                        {gameState.player_hands.length > 1 && (gameState.player_hands.slice(1).map((player, index) => (
+                            <div className="hand" key={index}>
+                                <h3>hand {index}</h3>
+
+                                <Hand cards={player} />
+                            </div>
+                        )))}
+                    </div>
+                    <Hand cards={gameState.player_hands[0]} />
+                    <div className="finishedHands">
+                        {gameState.finished_hands.map((player, index) => (
+                            <div className="hand" key={index}>
+                                <h3>finished hand {index}</h3>
+
+                                <Hand cards={player} />
+                            </div>
                         ))}
                     </div>
                 </div>

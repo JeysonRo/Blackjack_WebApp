@@ -7,7 +7,7 @@ export default function Hand({ cards }: HandProps) {
         <div className="hand">
             {cards.map((card: string, index: number) => (
                 <span key={index}>
-                    {index > 0 && "|"}
+                    {index > 0 && " | "}
                     {card}
                 </span>
             ))}

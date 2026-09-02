@@ -32,7 +32,7 @@ def get_game():
 def start_game():
     global game
     game = Blackjack_game(1000)
-    game.play([100])
+    game.play([100, 100])
     game_info = {
             "dealer_hand": game.dealer.card_list[1].value,
             "player_hands": [
