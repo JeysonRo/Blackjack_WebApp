@@ -19,6 +19,7 @@ export default function Players({ gameState }: Props) {
                             </div>
                         )))}
                     </div>
+                    
                     {gameState.player_hands.length > 0 &&
                         <div className="selected">
                             <Hand cards={gameState.player_hands[0]} />
