@@ -27,7 +27,7 @@ def format_game_info(game: Blackjack_game):
                     "finished_hands": [
                         card_list.get_hand_values() for card_list in game.final_hands
                     ],
-                    "valid_actions": game.players[0].get_valid_actions(),
+                    "valid_actions": ["continue"],
                 }
     return game_info
 

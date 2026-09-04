@@ -17,12 +17,19 @@
 
 .hand {
   padding: 15px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
+  /* border: 2px solid #ccc; */
+  /* border-radius: 8px; */
+}
+
+.hand img {
+  width: 150px;
+  height: auto;
+  margin-right: -40px;
 }
 
 .selected {
   border: 2px solid gold;
+  padding: 0px 40px 0px 0px;
 }
 
 /* .Menu {

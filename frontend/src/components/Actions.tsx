@@ -9,6 +9,7 @@ type Props = {
 export default function Actions({gameState, actionMutation}: Props) {
     return (
         <div className="actions">
+          {/* {gameState?.valid_actions?.includes("continue") && (<button onClick={() => actionMutation.mutate("stand")}>Continue</button>)} */}
           {gameState?.valid_actions?.includes("hit") && (<button onClick={() => actionMutation.mutate("hit")}>Hit</button>)}
           {gameState?.valid_actions?.includes("stand") && (<button onClick={() => actionMutation.mutate("stand")}>Stand</button>)}
           {gameState?.valid_actions?.includes("double") && (<button onClick={() => actionMutation.mutate("double")}>Double</button>)}

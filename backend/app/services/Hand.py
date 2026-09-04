@@ -56,13 +56,13 @@ class Hand:
 
     def get_valid_actions(self):
         valid_actions = []
+        valid_actions.append("stand")
         if self.sum < 21:
             valid_actions.append("hit")
-            valid_actions.append("stand")
-        if len(self.card_list) == 2:
-            valid_actions.append("double")
-            if self.card_values[self.card_list[0].value] == self.card_values[self.card_list[1].value]:
-                valid_actions.append("split")
+            if len(self.card_list) == 2:
+                valid_actions.append("double")
+                if self.card_values[self.card_list[0].value] == self.card_values[self.card_list[1].value]:
+                    valid_actions.append("split")
         return valid_actions
     
     def get_hand_values(self):

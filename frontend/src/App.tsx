@@ -36,6 +36,9 @@ function App() {
       </header>
 
       <main>
+
+        <Menu startGameMutation={startGameMutation} />
+
         <section className="dealer">
           <h2>Dealer</h2>
           {gameStateQuery.data && (
@@ -43,13 +46,11 @@ function App() {
           )}
         </section>
 
+        <Players gameState={gameStateQuery.data}/>
+        
         {gameStateQuery.data && (
           <Actions gameState={gameStateQuery.data} actionMutation={actionMutation} /> /* component to show actions */
         )}
-        
-        <Players gameState={gameStateQuery.data}/>
-
-        <Menu startGameMutation={startGameMutation} /> {/* Component for displaying Menu */}
 
         <div className="debug">
           {(gameStateQuery.isSuccess) && (
