@@ -7,22 +7,34 @@ app = Flask(__name__)
 game = None
 
 def format_game_info(game: Blackjack_game):
-    game_info = {
-                "dealer_hand": ["hidden"] + game.dealer.get_hand_values()[1:],
-                "player_hands": [
-                    card_list.get_hand_values() for card_list in game.players
-                ],
-                "finished_hands": [
-                    card_list.get_hand_values() for card_list in game.final_hands
-                ],
-                "valid_actions": game.players[0].get_valid_actions(),
-            }
+    if len(game.players) > 0:
+        game_info = {
+                    "dealer_hand": ["hidden"] + game.dealer.get_hand_values()[1:],
+                    "player_hands": [
+                        card_list.get_hand_values() for card_list in game.players
+                    ],
+                    "finished_hands": [
+                        card_list.get_hand_values() for card_list in game.final_hands
+                    ],
+                    "valid_actions": game.players[0].get_valid_actions(),
+                }
+    else:
+        game_info = {
+                    "dealer_hand": game.dealer.get_hand_values(),
+                    "player_hands": [
+                        card_list.get_hand_values() for card_list in game.players
+                    ],
+                    "finished_hands": [
+                        card_list.get_hand_values() for card_list in game.final_hands
+                    ],
+                    "valid_actions": game.players[0].get_valid_actions(),
+                }
     return game_info
 
-@app.route("/")
-def home():
-    # return render_template('index.html')
-    return "whats up 4head"
+# @app.route("/")
+# def home():
+#     # return render_template('index.html')
+#     return "whats up 4head"
 
 @app.route("/api/game", methods = ["GET"])
 def get_game():

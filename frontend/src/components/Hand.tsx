@@ -4,8 +4,6 @@ const cardImages = import.meta.glob(
 ) as Record<string, string>;
 
 function getCardImage(card: string) {
-    console.log("lOOK EHREJR HEKLRAJH")
-    console.log(card, typeof card);
     if (card == "hidden" || card == "Hidden") {
         return cardImages[`../assets/cardArt/card_back.svg`];
     }

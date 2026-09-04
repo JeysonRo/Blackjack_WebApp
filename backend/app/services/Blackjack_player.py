@@ -145,6 +145,7 @@ class Blackjack_game:
 
     def stand(self, player):
         # add hand to final_hands
+        self.players.popleft()
         self.final_hands.append(player)
         return
 
