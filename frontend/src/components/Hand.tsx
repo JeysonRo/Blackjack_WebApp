@@ -1,3 +1,18 @@
+const cardImages = import.meta.glob(
+    "../assets/cardArt/*.svg",
+    { eager: true, query: "?url", import: "default"}
+) as Record<string, string>;
+
+function getCardImage(card: string) {
+    console.log("lOOK EHREJR HEKLRAJH")
+    console.log(card, typeof card);
+    if (card == "hidden" || card == "Hidden") {
+        return cardImages[`../assets/cardArt/card_back.svg`];
+    }
+    card = card.toLowerCase()
+    return cardImages[`../assets/cardArt/${card}.svg`];
+}
+
 interface HandProps {
     cards: string[];
 }
@@ -6,10 +21,10 @@ export default function Hand({ cards }: HandProps) {
     return (
         <div className="hand">
             {cards.map((card: string, index: number) => (
-                <span key={index}>
-                    {index > 0 && " | "}
-                    {card}
-                </span>
+                <img 
+                    key={index}
+                    src={getCardImage(card)}
+                    alt={card}/>
             ))}
         </div>
     )

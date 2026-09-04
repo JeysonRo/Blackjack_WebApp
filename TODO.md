@@ -4,4 +4,4 @@ have player component show all cards side-by-side, have some sort of highlight f
 
 include balance (money) and balance UI top right
 
-include images of cards
+fix stand not removing card from player hands

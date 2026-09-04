@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { chooseAction, getGameState, startGame } from "./api/game";
-import type { GameState } from "./types/game";
 import "./App.css"
 import Actions from "./components/Actions"
 import Menu from "./components/Menu";

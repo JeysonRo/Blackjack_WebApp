@@ -68,5 +68,5 @@ class Hand:
     def get_hand_values(self):
         hands = []
         for card in self.card_list:
-            hands.append(card.value)
+            hands.append(card.value + "_of_" + card.suit)
         return hands
