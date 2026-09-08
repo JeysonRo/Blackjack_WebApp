@@ -8,7 +8,7 @@ type Props = {
 export default function Menu({ startGameMutation }: Props ){
     return (
         <div className="Menu">
-          <button
+          <button className="button"
            onClick={() => startGameMutation.mutate()}
            disabled={startGameMutation.isPending}
            >
