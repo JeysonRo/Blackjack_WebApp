@@ -12,7 +12,7 @@ export default function Menu({ startGameMutation }: Props ){
            onClick={() => startGameMutation.mutate()}
            disabled={startGameMutation.isPending}
            >
-            {startGameMutation.isPending ? "Starting..." : "Start Game"}
+            {startGameMutation.isPending ? "Starting..." : "Start New Game"}
           </button>
 
           {startGameMutation.isError && (

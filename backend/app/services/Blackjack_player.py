@@ -23,6 +23,8 @@ class Blackjack_game:
         
     def play(self, bet_list = [100]):
         # deal player hand and dealer hand from deck
+        self.players:deque[Hand] = deque()
+        self.final_hands:list[Hand] = []
         self.dealer = Hand()
         for i in range(len(bet_list)):
             self.players.append(Hand(bet_list[i]))
@@ -56,6 +58,8 @@ class Blackjack_game:
         # add hand to final_hands
         self.players.popleft()
         self.final_hands.append(player)
+        if not self.players:
+            self.resolve_dealer()
         return
 
     def double(self, player):

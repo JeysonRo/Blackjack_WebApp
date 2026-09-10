@@ -61,7 +61,8 @@ def Action():
         
     data = request.get_json()
     action = data["action"]
-    
+    if action == "continue":
+        game.play([100, 100])
     if action == "hit":   
         game.hit(game.players[0])
     if action == "stand":
