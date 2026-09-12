@@ -26,6 +26,8 @@
 
 .hand {
   padding: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
   /* border: 2px solid #ccc; */
   /* border-radius: 8px; */
 }
@@ -33,12 +35,12 @@
 .hand img {
   width: 150px;
   height: auto;
-  margin-right: -40px;
+  margin-right: -50px;
 }
 
 .selected {
   border: 2px solid gold;
-  padding: 0px 40px 0px 0px;
+  padding: 0px 50px 0px 0px;
 }
 
 .button {

@@ -6,3 +6,8 @@ export type GameState = {
 }
 
 export type Action = "hit" | "stand" | "double" | "split" | "surrender";
+
+export type GameSettings = {
+    "dealer_behavior": "H17" | "S17";
+    "surrender_enabled": boolean;
+}

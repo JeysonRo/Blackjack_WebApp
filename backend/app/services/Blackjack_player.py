@@ -3,7 +3,7 @@ from collections import deque
 from .Hand import Hand
         
 class Blackjack_game:
-    def __init__(self, bankroll, dealer_behavior = 'H17'):
+    def __init__(self, bankroll, dealer_behavior = 'H17', deck_count = 4, deck_pen = 21):
         # store game state
         match dealer_behavior:
             case 'S17':
@@ -14,14 +14,22 @@ class Blackjack_game:
         self.players:deque[Hand] = deque() # deque of hands
         self.final_hands:list[Hand] = []
         self.dealer = Hand()
-        self.initialize_shoe()
         
-    def initialize_shoe(self):
-        self.shoe = pydealer.Deck(rebuild=True, re_shuffle=True)
+        self.deck_pen = deck_pen
+        self.deck_count = deck_count
+        self.initialize_shoe(deck_count)
+        
+    def initialize_shoe(self, deck_count: int):
+        self.shoe = pydealer.Deck(rebuild=False)
+        for i in range(1, deck_count):
+            self.shoe.build() # adds a 52 card deck to the stack
         self.shoe.shuffle()
         return self.shoe
         
     def play(self, bet_list = [100]):
+        # rebuild shoe if deck_pen reached
+        if self.shoe.size <= self.deck_pen:
+            self.initialize_shoe(self.deck_count)
         # deal player hand and dealer hand from deck
         self.players:deque[Hand] = deque()
         self.final_hands:list[Hand] = []
@@ -51,6 +59,8 @@ class Blackjack_game:
         return
         
     def hit(self, player):
+        if self.shoe.size == 0:
+            self.initialize_shoe(self.deck_count)
         player.add(self.shoe.deal(1)[0])
         return
 
@@ -85,91 +95,9 @@ class Blackjack_game:
         # continue play of first player
         return
     
-    # def get_player_action(self, player: Hand, action = None):
-    #     # ask player for their choice of action
-    #     # temporarily text input
-    #     while not action:
-    #         if len(player.card_list) == 2: # can double
-    #             if player.card_list[0] == player.card_list[1]: # player can split
-    #                 print("Options: Hit | Stand | Double | Split")
-    #             else:
-    #                 print("Options: Hit | Stand | Double")
-    #         else:
-    #             print("Options: Hit | Stand")
-            
-    #         if not action: action = input()
-    #         match action:
-    #             case 'hit':
-    #                 return action
-    #             case 'stand':
-    #                 return action
-    #             case 'double':
-    #                 return action
-    #             case 'split':
-    #                 return action
-    #             case _:
-    #                 action = None
-    #                 print('invalid action')
-    
-    # def resolve_player(self, player:Hand):
-    #     print("next player")
-    #     while player.sum < 21:
-    #         print("Current hand sum:", player.sum)
-    #         action = self.get_player_action(player)
-    #         match action:
-    #             case 'hit':
-    #                 self.hit(player)
-    #             case 'stand':
-    #                 self.stand(player)
-    #                 break
-    #             case 'double':
-    #                 self.double(player)
-    #             case 'split':
-    #                 self.split(player)
-    
-    # def resolve_bets(self):
-    #     player: Hand
-    #     for player in self.final_hands:
-    #         # if blackjack
-    #         if player.sum == 21 and len(player.card_list) == 2:
-    #             if (self.dealer.sum == 21 and len(self.dealer.card_list) == 2):
-    #                 self.bankroll += player.bet
-    #                 print('push')
-    #                 self.display_bankroll()
-    #             else:
-    #                 self.bankroll += player.bet*2.5 #blackjack
-    #                 print('Blackjack!')
-    #                 self.display_bankroll()
-    #         elif self.dealer.sum == 21 and len(self.dealer.card_list) == 2:
-    #             print('lose')
-    #             self.display_bankroll()
-    #             return #lose
-    #         elif player.sum > 21:
-    #             print('lose')
-    #             self.display_bankroll()
-    #             return # lose bet
-    #         elif self.dealer.sum > 21:
-    #             self.bankroll += player.bet*2
-    #             print('win')
-    #             self.display_bankroll()
-    #         elif player.sum > self.dealer.sum:
-    #             print('win')
-    #             self.bankroll += player.bet*2
-    #             self.display_bankroll()
-    #         elif player.sum < self.dealer.sum:
-    #             print('lose')
-    #             self.display_bankroll()
-    #             return #lose
-    #         elif player.sum == self.dealer.sum:
-    #             print('push')
-    #             self.bankroll += player.bet
-    #             self.display_bankroll()
-    #     return
-    
     def display_bankroll(self):
         print('Current bankroll: ', self.bankroll)
         return
 
 if __name__ == "__main__":
     game = Blackjack_game(1000)
-    game.play([100,100,100])
