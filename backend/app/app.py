@@ -1,10 +1,12 @@
-from flask import Flask, request, url_for
+from flask import Flask, request, session
+import uuid
 from markupsafe import escape
 from services.Blackjack_player import Blackjack_game
 from services.Hand import Hand
 
 app = Flask(__name__)
-game = None
+app.secret_key = "dev-secret-key"
+games = {}
 
 def format_game_info(game: Blackjack_game):
     if len(game.players) > 0:
@@ -31,33 +33,39 @@ def format_game_info(game: Blackjack_game):
                 }
     return game_info
 
-# @app.route("/")
-# def home():
-#     # return render_template('index.html')
-#     return "whats up 4head"
-
 @app.route("/api/game", methods = ["GET"])
 def get_game():
-    if game is None:
-        return {"message": "No game in progess"}, 404
+    session_id = session.get("session_id")
+    if not session_id or session_id not in games:
+            return {"message": "No game in progess"}, 404
+        
+    game = games[session_id]
     
     game_info = format_game_info(game)
     return game_info
     
 @app.route("/api/game", methods=["POST"])
 def start_game():
-    global game
+    if "session_id" not in session:
+        session["session_id"] = str(uuid.uuid4())
+    
+    session_id = session["session_id"]
     game = Blackjack_game(1000)
+    games[session_id] = game
+    
     game.play([100, 100])
+    
     game_info = format_game_info(game)
 
     return game_info
 
 @app.route("/api/game/action", methods=["POST"])
 def Action():
-    global game
-    if game is None:
+    session_id = session.get("session_id")
+    if not session_id or session_id not in games:
             return {"message": "No game in progess"}, 404
+    
+    game = games[session_id]
         
     data = request.get_json()
     action = data["action"]

@@ -58,13 +58,13 @@ class Blackjack_game:
         print("Dealer sum:", self.dealer.sum)
         return
         
-    def hit(self, player):
+    def hit(self, player: Hand):
         if self.shoe.size == 0:
             self.initialize_shoe(self.deck_count)
         player.add(self.shoe.deal(1)[0])
         return
 
-    def stand(self, player):
+    def stand(self, player: Hand):
         # add hand to final_hands
         self.players.popleft()
         self.final_hands.append(player)
@@ -72,7 +72,7 @@ class Blackjack_game:
             self.resolve_dealer()
         return
 
-    def double(self, player):
+    def double(self, player: Hand):
         # double bet
         self.bankroll -= player.bet
         player.bet = player.bet*2
@@ -94,6 +94,11 @@ class Blackjack_game:
         self.players.appendleft(second_hand)
         # continue play of first player
         return
+    
+    # def surrender(self, player: Hand):
+    #     # TODO should return half of bet AND render ineligible for payout (force bust somehow)
+    #     self.stand(player)
+    #     return
     
     def display_bankroll(self):
         print('Current bankroll: ', self.bankroll)

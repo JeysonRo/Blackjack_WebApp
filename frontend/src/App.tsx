@@ -7,6 +7,7 @@ import Players from "./components/Players";
 import Hand from "./components/Hand";
 
 function App() {
+  // localStorage.setItem()
   const queryClient = useQueryClient();
 
   const gameStateQuery = useQuery({
