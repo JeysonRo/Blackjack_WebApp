@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { chooseAction, getGameState, startGame } from "./api/game";
+import { useState } from "react";
 import "./App.css"
 import Actions from "./components/Actions"
 import Menu from "./components/Menu";
@@ -7,14 +8,16 @@ import Players from "./components/Players";
 import Hand from "./components/Hand";
 
 function App() {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [dealerH17, setDealerH17] = useState(true);
   // localStorage.setItem()
+
   const queryClient = useQueryClient();
 
   const gameStateQuery = useQuery({
     queryKey: ["game"],
     queryFn: getGameState,
   });
-
 
   const startGameMutation = useMutation({
     mutationFn: startGame,
@@ -36,8 +39,19 @@ function App() {
         <h1>Blackjack</h1>
       </header>
 
-      <main>
+      <button className="settings-button" onClick={() => setSettingsOpen(true)}>Settings</button>
+      {settingsOpen && (
+        <div className="settings-panel">
+          <button onClick={() => setSettingsOpen(false)}>✕</button>
+          <h2>Settings</h2>
 
+          {/* put settings here */}
+          {/* <SettingsMenu/> */}
+
+        </div>
+      )}
+
+      <main>
         <Menu startGameMutation={startGameMutation} />
 
         <section className="dealer">

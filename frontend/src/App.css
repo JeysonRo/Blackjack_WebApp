@@ -54,6 +54,9 @@
   font-size: 16px;
   cursor:pointer;
   border: 1px, solid darkgreen;
+}
+
+.action-button {
   max-width: 120px;
 }
 
@@ -66,4 +69,21 @@
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.settings-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+}
+
+.settings-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  padding: 24px;
+  background: black;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
 }
