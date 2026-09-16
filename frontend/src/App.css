@@ -53,8 +53,12 @@
   display: inline-block;
   font-size: 16px;
   cursor:pointer;
-  border: 1px, solid green;
+  border: 1px, solid darkgreen;
   max-width: 120px;
+}
+
+.button:hover {
+  background-color: rgba(0, 128, 0, 0.541);
 }
 
 .button-group {
