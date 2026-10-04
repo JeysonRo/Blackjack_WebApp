@@ -6,6 +6,7 @@ import Actions from "./components/Actions"
 import Menu from "./components/Menu";
 import Players from "./components/Players";
 import Hand from "./components/Hand";
+import Settings from "./components/Settings";
 
 function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -46,7 +47,7 @@ function App() {
           <h2>Settings</h2>
 
           {/* put settings here */}
-          {/* <SettingsMenu/> */}
+          <Settings dealerH17={dealerH17} setDealerH17={setDealerH17}/>
 
         </div>
       )}

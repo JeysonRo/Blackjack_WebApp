@@ -87,3 +87,31 @@
   background: black;
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
 }
+
+.setting {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toggle {
+  width: 45px;
+  height: 24px;
+  border: none;
+  border-radius: 12px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.toggle-knob {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  transition: transform 0.2s;
+}
+
+.toggle.active .toggle-knob {
+  transform: translateX(21px);
+}
