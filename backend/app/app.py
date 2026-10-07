@@ -50,7 +50,13 @@ def start_game():
         session["session_id"] = str(uuid.uuid4())
     
     session_id = session["session_id"]
-    game = Blackjack_game(1000)
+    
+    settings = request.get_json()["settings"]
+    print("received json:")
+    print(settings)
+    dealer_behavior = settings["dealer_behavior"]
+    
+    game = Blackjack_game(bankroll=1000, dealer_behavior=dealer_behavior)
     games[session_id] = game
     
     game.play([100, 100])

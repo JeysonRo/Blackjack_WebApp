@@ -18,7 +18,7 @@ function App() {
     } else {
       return {
         dealer_behavior: "H17",
-        surrender_enabled: true,
+        surrender_enabled: false,
       };
     }
   });
@@ -69,7 +69,7 @@ function App() {
       )}
 
       <main>
-        <Menu startGameMutation={startGameMutation} />
+        <Menu startGameMutation={startGameMutation} settings={settings} />
 
         <section className="dealer">
           <h2>Dealer</h2>

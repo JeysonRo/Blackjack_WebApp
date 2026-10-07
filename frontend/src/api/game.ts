@@ -1,4 +1,4 @@
-import type { GameState } from "../types/game";
+import type { GameSettings, GameState } from "../types/game";
 
 export async function getGameState() {
     const response = await fetch("/api/game", {
@@ -12,9 +12,13 @@ export async function getGameState() {
     return response.json();
 }
 
-export async function startGame(): Promise<GameState> {
+export async function startGame(settings: GameSettings): Promise<GameState> {
     const response = await fetch("/api/game", {
         method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ settings }),
     });
 
     if (!response.ok) {
