@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { chooseAction, getGameState, startGame } from "./api/game";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css"
 import Actions from "./components/Actions"
 import Menu from "./components/Menu";
@@ -10,8 +10,17 @@ import Settings from "./components/Settings";
 
 function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [dealerH17, setDealerH17] = useState(true);
-  // localStorage.setItem()
+  const [dealerH17, setDealerH17] = useState(() => {
+    const saved = localStorage.getItem("dealerH17");
+    return saved !== null ? JSON.parse(saved) : true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem(
+      "dealerH17",
+      JSON.stringify(dealerH17)
+    );
+  }, [dealerH17]);
 
   const queryClient = useQueryClient();
 
@@ -46,7 +55,6 @@ function App() {
           <button onClick={() => setSettingsOpen(false)}>✕</button>
           <h2>Settings</h2>
 
-          {/* put settings here */}
           <Settings dealerH17={dealerH17} setDealerH17={setDealerH17}/>
 
         </div>
