@@ -7,20 +7,28 @@ import Menu from "./components/Menu";
 import Players from "./components/Players";
 import Hand from "./components/Hand";
 import Settings from "./components/Settings";
+import type { GameSettings } from "./types/game";
 
 function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [dealerH17, setDealerH17] = useState(() => {
-    const saved = localStorage.getItem("dealerH17");
-    return saved !== null ? JSON.parse(saved) : true;
+  const [settings, setSettings] = useState<GameSettings>(() => {
+    const saved = localStorage.getItem("gameSettings");
+    if (saved) {
+      return JSON.parse(saved);
+    } else {
+      return {
+        dealer_behavior: "H17",
+        surrender_enabled: true,
+      };
+    }
   });
 
   useEffect(() => {
     localStorage.setItem(
-      "dealerH17",
-      JSON.stringify(dealerH17)
+      "gameSettings",
+      JSON.stringify(settings)
     );
-  }, [dealerH17]);
+  }, [settings]);
 
   const queryClient = useQueryClient();
 
@@ -55,7 +63,7 @@ function App() {
           <button onClick={() => setSettingsOpen(false)}>✕</button>
           <h2>Settings</h2>
 
-          <Settings dealerH17={dealerH17} setDealerH17={setDealerH17}/>
+          <Settings settings={settings} setSettings={setSettings}/>
 
         </div>
       )}
