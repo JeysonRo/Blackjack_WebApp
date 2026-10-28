@@ -1,11 +1,13 @@
 from flask import Flask, request, session
 import uuid
 from markupsafe import escape
-from services.Blackjack_player import Blackjack_game
-from services.Hand import Hand
+from .services.Blackjack_player import Blackjack_game
+from .services.Hand import Hand
 from datetime import datetime, timedelta
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ["SECRET_KEY"]
