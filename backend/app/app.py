@@ -4,9 +4,11 @@ from markupsafe import escape
 from services.Blackjack_player import Blackjack_game
 from services.Hand import Hand
 from datetime import datetime, timedelta
+import os
+
 
 app = Flask(__name__)
-app.secret_key = "dev-secret-key"
+app.secret_key = os.environ["SECRET_KEY"]
 games = {}
 
 @app.before_request
