@@ -1,8 +1,8 @@
 import type { GameSettings, GameState } from "../types/game";
 
-const API_URL = import.meta.env.PROD
-    ? import.meta.env.VITE_API_URL
-    : "";
+// const API_URL = import.meta.env.PROD
+//     ? import.meta.env.VITE_API_URL
+//     : "";
 
 const apiUrl = (path: string) => path;
 
