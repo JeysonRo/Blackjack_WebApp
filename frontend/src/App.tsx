@@ -83,14 +83,6 @@ function App() {
         {gameStateQuery.data && (
           <Actions gameState={gameStateQuery.data} actionMutation={actionMutation} /> /* component to show actions */
         )}
-
-        <div className="debug">
-          {(gameStateQuery.isSuccess) && (
-            <pre>
-              {JSON.stringify(gameStateQuery.data, null, 2)}
-            </pre>
-          )}
-        </div>
       </main>
     </div>
   );
