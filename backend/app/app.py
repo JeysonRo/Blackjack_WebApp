@@ -1,4 +1,4 @@
-from flask import Flask, request, session
+from flask import Flask, request, session, send_from_directory
 import uuid
 from markupsafe import escape
 from .services.Blackjack_player import Blackjack_game
@@ -7,10 +7,19 @@ from datetime import datetime, timedelta
 import os
 from dotenv import load_dotenv
 from flask_cors import CORS
+from pathlib import Path
+
+FRONTEND_DIST = (
+    Path(__file__).resolve().parents[2] / "frontend" / "dist"
+)
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder=str(FRONTEND_DIST / "assets"),
+    static_url_path="/assets"
+)
 app.secret_key = os.environ["SECRET_KEY"]
 games = {}
 
@@ -95,6 +104,16 @@ def Action():
     game_info = format_game_info(game)
 
     return game_info
+
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve_frontend(path):
+    file_path = FRONTEND_DIST / path
+
+    if path and file_path.is_file():
+        return send_from_directory(FRONTEND_DIST, path)
+
+    return send_from_directory(FRONTEND_DIST, "index.html")
 
 def format_game_info(game: Blackjack_game):
     if len(game.players) > 0:

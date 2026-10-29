@@ -4,7 +4,7 @@ const API_URL = import.meta.env.PROD
     ? import.meta.env.VITE_API_URL
     : "";
 
-const apiUrl = (path: string) => `${API_URL}${path}`;
+const apiUrl = (path: string) => path;
 
 export async function getGameState() {
     const response = await fetch(apiUrl("/api/game"), {
