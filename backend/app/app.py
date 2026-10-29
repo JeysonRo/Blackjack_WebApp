@@ -6,12 +6,24 @@ from .services.Hand import Hand
 from datetime import datetime, timedelta
 import os
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ["SECRET_KEY"]
 games = {}
+
+CORS(
+    app,
+    supports_credentials=True,
+    origins=["https://blackjack-webapp-frontend.onrender.com"]
+)
+
+app.config.update(
+    SESSION_COOKIE_SECURE=True,
+    SESSION_COOKIE_SAMESITE="None"
+)
 
 @app.before_request
 def cleanup_games():
